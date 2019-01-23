@@ -1,0 +1,11 @@
+hola
+hola
+hola
+<%
+10+10*8;
+2+2;
+3*8;
+%>
+hola
+hola
+hola
