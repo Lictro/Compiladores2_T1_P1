@@ -2,12 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "Parser.cpp"
+#include "parser.cpp"
 
 int main(int argc, char** argv) {
     std::string var;
     std::ifstream infile(argv[1]);
     std::istringstream ins;
+
+    if(argc<2){
+        std::cerr << "Uso: ./test filename" << std::endl;
+        exit(1);
+    }
 
     if (infile.is_open()) {
         std::string str((std::istreambuf_iterator<char>(infile)),
