@@ -7,9 +7,17 @@
 #include "stdio.h"
 #include "Tokens.h"
 
+std::istream *input;
+
 #define YY_DECL Token yylex()
 
-int flag;
+#define YY_INPUT(buf,result,max_size) \
+    do { \
+        input->read(reinterpret_cast<char *>(buf), max_size); \
+        result = input->gcount(); \
+    } while (0)
+
+
 %}
 
 digit [0-9]
@@ -27,18 +35,18 @@ letter [a-zA-Z]
 <linecomment>\n BEGIN(INITIAL);
 
 "<%" BEGIN(exec);
-<exec>(_|{letter})(_|{letter}|{digit})* { printf(yytext); return Token::Iden; }
-<exec>{digit}* { printf(yytext); return Token::Numero; }
-<exec>"+" { printf(yytext); return Token::OpSum; } 
-<exec>"-" { printf(yytext); return Token::OpRes; } 
-<exec>"*" { printf(yytext); return Token::OpMul; } 
-<exec>"/" { printf(yytext); return Token::OpDiv; }
-<exec>";" { printf(yytext); return Token::Semicolon; } 
-<exec>"(" { printf(yytext); return Token::OpenPar; }
-<exec>")" { printf(yytext); return Token::ClosePar; }
+<exec>(_|{letter})(_|{letter}|{digit})* { return Token::Iden; }
+<exec>{digit}* { return Token::Numero; }
+<exec>"+" { return Token::OpSum; } 
+<exec>"-" { return Token::OpRes; } 
+<exec>"*" { return Token::OpMul; } 
+<exec>"/" { return Token::OpDiv; }
+<exec>";" { return Token::Semicolon; } 
+<exec>"(" { return Token::OpenPar; }
+<exec>")" { return Token::ClosePar; }
 <exec>"%>" BEGIN(INITIAL);
 <exec>[\n|\t] { }
-<<EOF>> { return Token::Eof;}
+<<EOF>> { return Token::Eof; }
 
-.|\n printf(yytext);
+.|\n std::cout << yytext;
 %%

@@ -1,6 +1,6 @@
-#line 2 "Lexer.cpp"
+#line 2 "Lexer.h"
 
-#line 4 "Lexer.cpp"
+#line 4 "Lexer.h"
 
 #define  YY_INT_ALIGNED short int
 
@@ -484,10 +484,18 @@ char *yytext;
 #include "stdio.h"
 #include "Tokens.h"
 
+std::istream *input;
+
 #define YY_DECL Token yylex()
 
-int flag;
-#line 491 "Lexer.cpp"
+#define YY_INPUT(buf,result,max_size) \
+    do { \
+        input->read(reinterpret_cast<char *>(buf), max_size); \
+        result = input->gcount(); \
+    } while (0)
+
+
+#line 499 "Lexer.h"
 
 #define INITIAL 0
 #define blockcomment 1
@@ -672,9 +680,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 18 "tarea1.l"
+#line 26 "tarea1.l"
 
-#line 678 "Lexer.cpp"
+#line 686 "Lexer.h"
 
 	if ( !(yy_init) )
 		{
@@ -759,126 +767,126 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "tarea1.l"
+#line 27 "tarea1.l"
 BEGIN(blockcomment);
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 20 "tarea1.l"
+#line 28 "tarea1.l"
 /* eat anything that's not a '*' */
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 21 "tarea1.l"
+#line 29 "tarea1.l"
 /* eat up '*'s not followed by '/'s */
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 22 "tarea1.l"
+#line 30 "tarea1.l"
 
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 23 "tarea1.l"
+#line 31 "tarea1.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "tarea1.l"
+#line 33 "tarea1.l"
 BEGIN(linecomment);
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 26 "tarea1.l"
+#line 34 "tarea1.l"
 
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 27 "tarea1.l"
+#line 35 "tarea1.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 29 "tarea1.l"
+#line 37 "tarea1.l"
 BEGIN(exec);
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 30 "tarea1.l"
-{ printf(yytext); return Token::Iden; }
+#line 38 "tarea1.l"
+{ return Token::Iden; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 31 "tarea1.l"
-{ printf(yytext); return Token::Numero; }
+#line 39 "tarea1.l"
+{ return Token::Numero; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 32 "tarea1.l"
-{ printf(yytext); return Token::OpSum; } 
+#line 40 "tarea1.l"
+{ return Token::OpSum; } 
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 33 "tarea1.l"
-{ printf(yytext); return Token::OpRes; } 
+#line 41 "tarea1.l"
+{ return Token::OpRes; } 
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 34 "tarea1.l"
-{ printf(yytext); return Token::OpMul; } 
+#line 42 "tarea1.l"
+{ return Token::OpMul; } 
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 35 "tarea1.l"
-{ printf(yytext); return Token::OpDiv; }
+#line 43 "tarea1.l"
+{ return Token::OpDiv; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 36 "tarea1.l"
-{ printf(yytext); return Token::Semicolon; } 
+#line 44 "tarea1.l"
+{ return Token::Semicolon; } 
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 37 "tarea1.l"
-{ printf(yytext); return Token::OpenPar; }
+#line 45 "tarea1.l"
+{ return Token::OpenPar; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 38 "tarea1.l"
-{ printf(yytext); return Token::ClosePar; }
+#line 46 "tarea1.l"
+{ return Token::ClosePar; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 39 "tarea1.l"
+#line 47 "tarea1.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 40 "tarea1.l"
+#line 48 "tarea1.l"
 { }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(blockcomment):
 case YY_STATE_EOF(linecomment):
 case YY_STATE_EOF(exec):
-#line 41 "tarea1.l"
-{ return Token::Eof;}
+#line 49 "tarea1.l"
+{ return Token::Eof; }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 43 "tarea1.l"
-printf(yytext);
+#line 51 "tarea1.l"
+std::cout << yytext;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 44 "tarea1.l"
+#line 52 "tarea1.l"
 ECHO;
 	YY_BREAK
-#line 882 "Lexer.cpp"
+#line 890 "Lexer.h"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1873,6 +1881,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 44 "tarea1.l"
+#line 52 "tarea1.l"
 
 
