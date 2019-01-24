@@ -1,1 +1,17 @@
-<%print 10;%><%print 10;%>
+Deberia imprimir!!!!
+<%if(var1>40) { %>
+    var1 es mayor
+    <%if(var2<100) { %>
+        var2 es menor
+    <% }else{ %>
+        var2 es mayor
+    <% } %>
+<% }else{ %>
+    var1 es menor
+<% } %>
+Deberia imprimir!!!!
+<%
+print 120 / 5;
+print var1*var2;
+print (12*var1)-50+34;
+%>

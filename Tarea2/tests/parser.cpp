@@ -108,7 +108,6 @@ void IfElseST(){
     nextToken();
     if (currTkn == Token::OpenBra)
     {
-        nextToken();
         if(able){
         if(execution.top() == 1){
             if(val == 1){
@@ -117,6 +116,7 @@ void IfElseST(){
                 execution.push(2);
             }
         }}
+        nextToken();
     }
     else
     {
@@ -137,7 +137,6 @@ void IfElseST(){
             cout << "ESPERADO [ { ] - RECIBIDO [ " << yytext << " ]" << endl;
             exit(1);
         }
-        nextToken();
         //////////////////////////////
         if(able){
         if(execution.top() == 2){
@@ -148,16 +147,21 @@ void IfElseST(){
             execution.pop();
             execution.push(2);
         }}
+        nextToken();
         Body();
         if (currTkn != Token::CloseBra)
         {
             cout << "ESPERADO [ } ] - RECIBIDO [ " << yytext << " ]" << endl;
             exit(1);
         }
+        if(execution.top() == 2){
+            execution.pop();
+            execution.push(1);
+        }
         nextToken();
     }
     if(able){
-    execution.pop();
+        execution.pop();
     }
 }
 
