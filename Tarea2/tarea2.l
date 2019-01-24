@@ -16,7 +16,8 @@ std::istream *input;
         input->read(reinterpret_cast<char *>(buf), max_size); \
         result = input->gcount(); \
     } while (0)
-
+#include <stack>
+std::stack <int> execution;
 %}
 
 digit [0-9]
@@ -50,13 +51,14 @@ letter [a-zA-Z]
 <exec>"<" { return Token::OpMenor; } 
 <exec>">=" { return Token::OpMayorIgual; } 
 <exec>"<=" { return Token::OpMenorIgual; }
-<exec>"=" { return Token::OpIgual; } 
+<exec>"==" { return Token::OpIgual; } 
 <exec>"!=" { return Token::OpDistinto; } 
 <exec>"{" { return Token::OpenBra; }
 <exec>"}" { return Token::CloseBra; }
-<exec>"%>" BEGIN(INITIAL);
-<exec>[\n|\t] { }
+<exec>"%>" /*std::cout <<" -"<<execution.top();*/ BEGIN(INITIAL);
+<exec>[\t] { }
+<exec>.|\n { }
 <<EOF>> { return Token::Eof; }
 
-. std::cout << yytext;
+.|\n if(execution.top()==1){std::cout << yytext;}
 %%

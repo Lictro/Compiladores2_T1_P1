@@ -1,6 +1,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <stack>
+#include <vector>
 #include "lexer.h"
 
 using namespace std;
@@ -8,12 +10,29 @@ using namespace std;
 Token currTkn;
 unordered_map<std::string, int> vars;
 
+vector<string> mysplitFn(string str, string delim)
+{
+    vector<string> tokens;
+    size_t prev = 0, pos = 0;
+    do
+    {
+        pos = str.find(delim, prev);
+        if (pos == string::npos)
+            pos = str.length();
+        string token = str.substr(prev, pos - prev);
+        if (!token.empty())
+            tokens.push_back(token);
+        prev = pos + delim.length();
+    } while (pos < str.length() && prev < str.length());
+    return tokens;
+}
+
 void parse();
 void Input();
 void Body();
 void Statement();
 void PrintST();
-void IfElseST(){}
+void IfElseST();
 int Expr();
 int SingleExpr();
 int Term();
@@ -25,6 +44,7 @@ void nextToken(){
 
 void parse()
 {
+    execution.push(1);
     nextToken();
     Body();
     if (currTkn == Token::Eof)
@@ -63,7 +83,82 @@ void PrintST()
         cout << "ESPERADO [ ; ] - RECIBIDO [ " << yytext << " ]" << endl;
         exit(1);
     }
+    if(execution.top() == 1)
+        cout << val << endl;
     nextToken();
+}
+
+void IfElseST(){
+    int val;
+    int able = 0;
+    if(execution.top() == 1){
+        able = 1;    
+    }
+    nextToken();
+    if (currTkn != Token::OpenPar){
+        cout << "ESPERADO [ ( ] - RECIBIDO [ " << yytext << " ]" << endl;
+        exit(1);
+    }
+    nextToken();
+    val = Expr();
+    if (currTkn != Token::ClosePar){
+        cout << "ESPERADO [ ) ] - RECIBIDO [ " << yytext << " ]" << endl;
+        exit(1);
+    }
+    nextToken();
+    if (currTkn == Token::OpenBra)
+    {
+        nextToken();
+        if(able){
+        if(execution.top() == 1){
+            if(val == 1){
+                execution.push(1);
+            }else{
+                execution.push(2);
+            }
+        }}
+    }
+    else
+    {
+        cout << "ESPERADO [ { ] - RECIBIDO [ " << yytext << " ]" << endl;
+        exit(1);
+    }
+    Body();
+    if (currTkn != Token::CloseBra)
+    {
+        cout << "ESPERADO [ } ] - RECIBIDO [ " << yytext << " ]" << endl;
+        exit(1);
+    }
+    nextToken();
+    if(currTkn == Token::KElse){
+        nextToken();
+        if (currTkn != Token::OpenBra)
+        {
+            cout << "ESPERADO [ { ] - RECIBIDO [ " << yytext << " ]" << endl;
+            exit(1);
+        }
+        nextToken();
+        //////////////////////////////
+        if(able){
+        if(execution.top() == 2){
+            execution.pop();
+            execution.push(1);
+        }
+        else if(execution.top() == 1){
+            execution.pop();
+            execution.push(2);
+        }}
+        Body();
+        if (currTkn != Token::CloseBra)
+        {
+            cout << "ESPERADO [ } ] - RECIBIDO [ " << yytext << " ]" << endl;
+            exit(1);
+        }
+        nextToken();
+    }
+    if(able){
+    execution.pop();
+    }
 }
 
 int Expr()
@@ -143,7 +238,11 @@ int Factor()
     int val = 0;
     if (Token::Iden == currTkn)
     {
-        
+        if(vars.find(yytext)==vars.end()){
+            cout << "Variable " << yytext << " no existe" << endl;
+            exit(1);
+        }
+        val=vars.find(yytext)->second;
         nextToken();
     }
     else if (currTkn == Token::Numero)

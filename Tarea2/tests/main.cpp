@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     std::istringstream ins;
 
     if(argc<2){
-        std::cerr << "Uso: ./test filename" << std::endl;
+        std::cerr << "Uso: ./test filename [-Dvar=10]" << std::endl;
         exit(1);
     }
 
@@ -25,6 +25,19 @@ int main(int argc, char** argv) {
 
     input = &ins;
 
+    if(argc>2){
+        for(int i = 2; i < argc; i++)
+        {
+            if(argv[i][0]=='-' && argv[i][1]=='D'){
+                auto asignar = mysplitFn(argv[i],"-D");
+                auto par = mysplitFn(asignar[0],"=");
+                if(par.size()==2){
+                    vars.insert(make_pair(par[0],stoi(par[1])));
+                }
+            }
+        }
+    }
+    
     parse();
 
     return 0;
