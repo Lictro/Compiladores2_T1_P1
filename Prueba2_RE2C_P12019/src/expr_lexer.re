@@ -1,7 +1,9 @@
 #include <cstdio>
+#include <iostream>
 #include "expr_lexer.h"
 
 /*!max:re2c*/
+using namespace std;
 
 int state = 1;
 
