@@ -1,25 +1,29 @@
 %{
-requieres
     #include <cstdio>
     #include <iostream>
-    #include "parse.tab.h";
+    #include <vector>
+    #include <unordered_map>
+    #include "parser.tab.h"
 
     using namespace std;
     // Declare stuff from Flex that Bison needs to know about:
     extern int yylex();
+    extern char*yytext;
     extern int yyparse();
+    extern string curriden;
     extern FILE *yyin;
     
+    #define YYERROR_VERBOSE 1
+    
     void yyerror(const char *s);
-
-    typedef ASTNode* YYSTYPE;
-    typedef uint16_t char16_t;
+    BlockST* b = new BlockST();
 %}
 
-%code requiere
+%code requires{
+#include "ast.h"
+}
 
-%token EOFI
-%token EOLI
+%token EOL
 %token ERROR
 %token MAYOR
 %token MENOR
@@ -27,6 +31,7 @@ requieres
 %token MENORIGUAL
 %token IGUAL
 %token DISTINTO
+%token ASIGNAR
 %token SUMA
 %token RESTA
 %token MULT
@@ -42,33 +47,59 @@ requieres
 %token KELSE
 %token ID
 
-%%
-binexpr:
-    singlexpr MAYOR singlexpr {}
-    | singlexpr MENOR singlexpr {}
-    | singlexpr MAYORIGUAL singlexpr {}
-    | singlexpr MENORIGUAL singlexpr {}
-    | singlexpr IGUAL singlexpr {}
-    | singlexpr DISTINTO singlexpr {}
-    | singlexpr {}
-    ;
+%nonassoc CLOSEPAR
+%nonassoc KELSE
+%expect 6
 
-singlexpr:
-    term SUMA singlexpr {}
-    | term RESTA singlexpr {}
-    | term {}
-    ;
+%%
+program:
+    eolsep block { b->exec(); };
+    
+block:
+    stmtlist { };
+
+stmtlist: 
+    stmtlist stmt { ($$) }
+    |stmt { vector<ASTNode*> temp; temp.push_back((ASTNode*)$1); $$ = new };
+
+stmt:
+    ID ASIGNAR binop eols { $$ = new AsignST(curriden,$3); }
+    |KPRINT OPENPAR binop CLOSEPAR eols {$$ = new PrintST($3);}
+    |KIF OPENPAR binop CLOSEPAR eols stmtlist {$$ = new IfST($3, nullptr, nullptr);}
+    |KIF OPENPAR binop CLOSEPAR eols stmtlist KELSE eols stmtlist {$$ = new IfST($3, nullptr, nullptr);};
+    
+eols: 
+    eols EOL
+    |EOL;
+    
+eolsep: 
+    eols EOL
+    |EOL 
+    |;
+    
+binop:
+    aritexpr MAYOR aritexpr { $$ = new MayExpression($1,$3); }
+    |aritexpr MAYORIGUAL aritexpr { $$ = new MayIgExpression($1,$3); }
+    |aritexpr MENOR aritexpr { $$ = new MenExpression($1,$3); }
+    |aritexpr MENORIGUAL aritexpr { $$ = new MenIgExpression($1,$3); }
+    |aritexpr IGUAL aritexpr { $$ = new IgualExpression($1,$3); }
+    |aritexpr DISTINTO aritexpr { $$ = new DistExpression($1,$3); }
+    |aritexpr { $$ = $1; };
+
+aritexpr:
+    term SUMA aritexpr  { $$ = new SumExpression($1,$3); }
+    |term RESTA aritexpr  { $$ = new ResExpression($1,$3); }
+    |term { $$ = $1; };
 
 term:
-    factor MULT term {}
-    | factor DIV term {}
-    | factor {}
-    ;
+    term MULT factor { $$ = new MulExpression($1,$3); }
+    |term DIV factor { $$ = new DivExpression($1,$3); }
+    |factor { $$ = $1; };
 
 factor:
-    NUMERO {}
-    | ID {}
-    | OPENPAR binexpr CLOSEPAR {}
+    NUMERO { $$ = new Number(atoi(yytext)); }
+    |ID { $$ = new Iden(string(yytext)); }
+    |OPENPAR binop CLOSEPAR { $$ = $2; }
     ;
 %%
 

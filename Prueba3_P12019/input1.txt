@@ -1,0 +1,32 @@
+/*
+ * Comentario 1
+ */
+x = 10
+//Comentario 1
+y = 20
+print x
+print y
+
+if (x == 10)
+	if (x == 9)
+		z = (x + y) * 5
+//Comentario de linea antes del else
+/* Comentario
+   de
+   bloque
+   antes
+   del
+   else */ 
+   
+   else
+		z = 20
+
+if (z > 10)
+	w = 10
+else
+	w = 20
+
+print z
+print (z + 10)
+print w
+// Comentario 2

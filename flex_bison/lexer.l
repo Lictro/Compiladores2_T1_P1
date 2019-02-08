@@ -1,35 +1,26 @@
 %option noyywrap
 %x blockcomment
 %x linecomment
-%x exec
 %option yylineno
 
 %{
 #include <iostream>
 #include "parser.tab.h"
+
 using namespace std;
 
-#define YY_DECL int yylex()
+string curriden;
 %}
 
 digit [0-9]
 letter [a-zA-Z]
 
 %%
-"/*" BEGIN(blockcomment);
-<blockcomment>[^*\n]*        /* eat anything that's not a '*' */
-<blockcomment>"*"+[^*/\n]*   /* eat up '*'s not followed by '/'s */
-<blockcomment>\n
-<blockcomment>"*"+"/" BEGIN(INITIAL);
-
-"//" BEGIN(linecomment);
-<linecomment>[^\n]* 
-<linecomment>\n BEGIN(INITIAL);
-
+"\n" { return EOL;}
 "print" { return KPRINT;} 
 "if" { return KIF;} 
 "else" { return KELSE;} 
-(_|{letter})(_|{letter}|{digit})* { return ID;}
+(_|{letter})(_|{letter}|{digit})* { curriden = string(yytext); return ID;}
 {digit}* { return NUMERO;}
 "+" { return SUMA;} 
 "-" { return RESTA;} 
@@ -42,11 +33,11 @@ letter [a-zA-Z]
 "<" { return MENOR;} 
 ">=" { return MAYORIGUAL;} 
 "<=" { return MENORIGUAL;}
-"==" { return IGUAL;} 
+"==" { return IGUAL;}
+"=" { return ASIGNAR;}
 "!=" { return DISTINTO;} 
 "{" { return OPENBRA;}
 "}" { return CLOSEPAR;}
-[\t|\n] { }
+[" "|\t|\r|\f] { return yylex(); }
 . { return ERROR; }
-<<EOF>> { return EOFI; }
 %%

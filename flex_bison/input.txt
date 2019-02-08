@@ -1,1 +1,6 @@
-10 + 12 - x 
+Y = 67
+print(12)
+if(1)
+print(13)
+else
+print(16)
