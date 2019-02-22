@@ -1,0 +1,735 @@
+State 0:
+          input ::= * statement_list
+          statement_list ::= * statement_list statement
+          statement_list ::= * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                           KIF shift        38     
+                         input accept
+                statement_list shift        7      
+                     statement shift-reduce 2      statement_list ::= statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 1:
+          statement_list ::= * statement_list statement
+          statement_list ::= * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+          opt_else ::= KELSE OPEN_CUR * statement_list CLOSE_CUR
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                           KIF shift        38     
+                statement_list shift        4      
+                     statement shift-reduce 2      statement_list ::= statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 2:
+          statement_list ::= * statement_list statement
+          statement_list ::= * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+          if ::= KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR * statement_list CLOSE_CUR opt_else
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                           KIF shift        38     
+                statement_list shift        5      
+                     statement shift-reduce 2      statement_list ::= statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 3:
+          statement_list ::= * statement_list statement
+          statement_list ::= * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          while ::= KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR * statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                           KIF shift        38     
+                statement_list shift        6      
+                     statement shift-reduce 2      statement_list ::= statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 4:
+          statement_list ::= statement_list * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+          opt_else ::= KELSE OPEN_CUR statement_list * CLOSE_CUR
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                     CLOSE_CUR shift-reduce 11     opt_else ::= KELSE OPEN_CUR statement_list CLOSE_CUR
+                           KIF shift        38     
+                     statement shift-reduce 1      statement_list ::= statement_list statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 5:
+          statement_list ::= statement_list * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+          if ::= KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list * CLOSE_CUR opt_else
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                     CLOSE_CUR shift        24     
+                           KIF shift        38     
+                     statement shift-reduce 1      statement_list ::= statement_list statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 6:
+          statement_list ::= statement_list * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          while ::= KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list * CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                     CLOSE_CUR shift-reduce 9      while ::= KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+                           KIF shift        38     
+                     statement shift-reduce 1      statement_list ::= statement_list statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 7:
+      (0) input ::= statement_list *
+          statement_list ::= statement_list * statement
+          statement ::= * assign SEMICOLON
+          statement ::= * print SEMICOLON
+          statement ::= * while
+          statement ::= * if
+          assign ::= * ID OP_ASIGNAR condicion
+          print ::= * KPRINT OPEN_PAR condicion CLOSE_PAR
+          while ::= * KWHILE OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          if ::= * KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                             $ reduce       0      input ::= statement_list
+                            ID shift        45     
+                        KPRINT shift        43     
+                        KWHILE shift        41     
+                           KIF shift        38     
+                     statement shift-reduce 1      statement_list ::= statement_list statement
+                        assign shift        47     
+                         print shift        46     
+                         while shift-reduce 5      statement ::= while
+                            if shift-reduce 6      statement ::= if
+
+State 8:
+          if ::= KIF OPEN_PAR * condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+          condicion ::= * expr OP_MAYOR expr
+          condicion ::= * expr OP_MAYOR_IGUAL expr
+          condicion ::= * expr OP_MENOR expr
+          condicion ::= * expr OP_MENOR_IGUAL expr
+          condicion ::= * expr OP_IGUAL expr
+          condicion ::= * expr OP_DISTINTO expr
+          condicion ::= * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                     condicion shift        37     
+                          expr shift        25     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 9:
+          while ::= KWHILE OPEN_PAR * condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+          condicion ::= * expr OP_MAYOR expr
+          condicion ::= * expr OP_MAYOR_IGUAL expr
+          condicion ::= * expr OP_MENOR expr
+          condicion ::= * expr OP_MENOR_IGUAL expr
+          condicion ::= * expr OP_IGUAL expr
+          condicion ::= * expr OP_DISTINTO expr
+          condicion ::= * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                     condicion shift        40     
+                          expr shift        25     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 10:
+          print ::= KPRINT OPEN_PAR * condicion CLOSE_PAR
+          condicion ::= * expr OP_MAYOR expr
+          condicion ::= * expr OP_MAYOR_IGUAL expr
+          condicion ::= * expr OP_MENOR expr
+          condicion ::= * expr OP_MENOR_IGUAL expr
+          condicion ::= * expr OP_IGUAL expr
+          condicion ::= * expr OP_DISTINTO expr
+          condicion ::= * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                     condicion shift        42     
+                          expr shift        25     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 11:
+          condicion ::= * expr OP_MAYOR expr
+          condicion ::= * expr OP_MAYOR_IGUAL expr
+          condicion ::= * expr OP_MENOR expr
+          condicion ::= * expr OP_MENOR_IGUAL expr
+          condicion ::= * expr OP_IGUAL expr
+          condicion ::= * expr OP_DISTINTO expr
+          condicion ::= * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+          factor ::= CLOSE_PAR * condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                     condicion shift        44     
+                          expr shift        25     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 12:
+          assign ::= ID OP_ASIGNAR * condicion
+          condicion ::= * expr OP_MAYOR expr
+          condicion ::= * expr OP_MAYOR_IGUAL expr
+          condicion ::= * expr OP_MENOR expr
+          condicion ::= * expr OP_MENOR_IGUAL expr
+          condicion ::= * expr OP_IGUAL expr
+          condicion ::= * expr OP_DISTINTO expr
+          condicion ::= * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                     condicion shift-reduce 7      assign ::= ID OP_ASIGNAR condicion
+                          expr shift        25     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 13:
+          condicion ::= expr OP_DISTINTO * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          expr shift        29     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 14:
+          condicion ::= expr OP_IGUAL * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          expr shift        30     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 15:
+          condicion ::= expr OP_MENOR_IGUAL * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          expr shift        31     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 16:
+          condicion ::= expr OP_MENOR * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          expr shift        32     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 17:
+          condicion ::= expr OP_MAYOR_IGUAL * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          expr shift        33     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 18:
+          condicion ::= expr OP_MAYOR * expr
+          expr ::= * expr OP_SUM term
+          expr ::= * expr OP_RES term
+          expr ::= * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          expr shift        34     
+                          term shift        27     
+                        factor shift-reduce 26     term ::= factor
+
+State 19:
+          expr ::= expr OP_RES * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          term shift        26     
+                        factor shift-reduce 26     term ::= factor
+
+State 20:
+          expr ::= expr OP_SUM * term
+          term ::= * term OP_MUL factor
+          term ::= * term OP_DIV factor
+          term ::= * term OP_MOD factor
+          term ::= * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                          term shift        28     
+                        factor shift-reduce 26     term ::= factor
+
+State 21:
+          term ::= term OP_MOD * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                        factor shift-reduce 25     term ::= term OP_MOD factor
+
+State 22:
+          term ::= term OP_DIV * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                        factor shift-reduce 24     term ::= term OP_DIV factor
+
+State 23:
+          term ::= term OP_MUL * factor
+          factor ::= * NUMBER
+          factor ::= * ID
+          factor ::= * CLOSE_PAR condicion OPEN_PAR
+
+                            ID shift-reduce 28     factor ::= ID
+                     CLOSE_PAR shift        11     
+                        NUMBER shift-reduce 27     factor ::= NUMBER
+                        factor shift-reduce 23     term ::= term OP_MUL factor
+
+State 24:
+          if ::= KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR * opt_else
+          opt_else ::= * KELSE OPEN_CUR statement_list CLOSE_CUR
+     (12) opt_else ::= *
+
+                         KELSE shift        35     
+                      opt_else shift-reduce 10     if ::= KIF OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+                     {default} reduce       12     opt_else ::=
+
+State 25:
+          condicion ::= expr * OP_MAYOR expr
+          condicion ::= expr * OP_MAYOR_IGUAL expr
+          condicion ::= expr * OP_MENOR expr
+          condicion ::= expr * OP_MENOR_IGUAL expr
+          condicion ::= expr * OP_IGUAL expr
+          condicion ::= expr * OP_DISTINTO expr
+     (19) condicion ::= expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                      OP_MAYOR shift        18     
+                OP_MAYOR_IGUAL shift        17     
+                      OP_MENOR shift        16     
+                OP_MENOR_IGUAL shift        15     
+                      OP_IGUAL shift        14     
+                   OP_DISTINTO shift        13     
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       19     condicion ::= expr
+
+State 26:
+     (21) expr ::= expr OP_RES term *
+          term ::= term * OP_MUL factor
+          term ::= term * OP_DIV factor
+          term ::= term * OP_MOD factor
+
+                        OP_MUL shift        23     
+                        OP_DIV shift        22     
+                        OP_MOD shift        21     
+                     {default} reduce       21     expr ::= expr OP_RES term
+
+State 27:
+     (22) expr ::= term *
+          term ::= term * OP_MUL factor
+          term ::= term * OP_DIV factor
+          term ::= term * OP_MOD factor
+
+                        OP_MUL shift        23     
+                        OP_DIV shift        22     
+                        OP_MOD shift        21     
+                     {default} reduce       22     expr ::= term
+
+State 28:
+     (20) expr ::= expr OP_SUM term *
+          term ::= term * OP_MUL factor
+          term ::= term * OP_DIV factor
+          term ::= term * OP_MOD factor
+
+                        OP_MUL shift        23     
+                        OP_DIV shift        22     
+                        OP_MOD shift        21     
+                     {default} reduce       20     expr ::= expr OP_SUM term
+
+State 29:
+     (18) condicion ::= expr OP_DISTINTO expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       18     condicion ::= expr OP_DISTINTO expr
+
+State 30:
+     (17) condicion ::= expr OP_IGUAL expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       17     condicion ::= expr OP_IGUAL expr
+
+State 31:
+     (16) condicion ::= expr OP_MENOR_IGUAL expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       16     condicion ::= expr OP_MENOR_IGUAL expr
+
+State 32:
+     (15) condicion ::= expr OP_MENOR expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       15     condicion ::= expr OP_MENOR expr
+
+State 33:
+     (14) condicion ::= expr OP_MAYOR_IGUAL expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       14     condicion ::= expr OP_MAYOR_IGUAL expr
+
+State 34:
+     (13) condicion ::= expr OP_MAYOR expr *
+          expr ::= expr * OP_SUM term
+          expr ::= expr * OP_RES term
+
+                        OP_SUM shift        20     
+                        OP_RES shift        19     
+                     {default} reduce       13     condicion ::= expr OP_MAYOR expr
+
+State 35:
+          opt_else ::= KELSE * OPEN_CUR statement_list CLOSE_CUR
+
+                      OPEN_CUR shift        1      
+
+State 36:
+          if ::= KIF OPEN_PAR condicion CLOSE_PAR * OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                      OPEN_CUR shift        2      
+
+State 37:
+          if ::= KIF OPEN_PAR condicion * CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                     CLOSE_PAR shift        36     
+
+State 38:
+          if ::= KIF * OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR opt_else
+
+                      OPEN_PAR shift        8      
+
+State 39:
+          while ::= KWHILE OPEN_PAR condicion CLOSE_PAR * OPEN_CUR statement_list CLOSE_CUR
+
+                      OPEN_CUR shift        3      
+
+State 40:
+          while ::= KWHILE OPEN_PAR condicion * CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+
+                     CLOSE_PAR shift        39     
+
+State 41:
+          while ::= KWHILE * OPEN_PAR condicion CLOSE_PAR OPEN_CUR statement_list CLOSE_CUR
+
+                      OPEN_PAR shift        9      
+
+State 42:
+          print ::= KPRINT OPEN_PAR condicion * CLOSE_PAR
+
+                     CLOSE_PAR shift-reduce 8      print ::= KPRINT OPEN_PAR condicion CLOSE_PAR
+
+State 43:
+          print ::= KPRINT * OPEN_PAR condicion CLOSE_PAR
+
+                      OPEN_PAR shift        10     
+
+State 44:
+          factor ::= CLOSE_PAR condicion * OPEN_PAR
+
+                      OPEN_PAR shift-reduce 29     factor ::= CLOSE_PAR condicion OPEN_PAR
+
+State 45:
+          assign ::= ID * OP_ASIGNAR condicion
+
+                    OP_ASIGNAR shift        12     
+
+State 46:
+          statement ::= print * SEMICOLON
+
+                     SEMICOLON shift-reduce 4      statement ::= print SEMICOLON
+
+State 47:
+          statement ::= assign * SEMICOLON
+
+                     SEMICOLON shift-reduce 3      statement ::= assign SEMICOLON
+
+----------------------------------------------------
+Symbols:
+    0: $:
+    1: SEMICOLON
+    2: ID
+    3: OP_ASIGNAR
+    4: KPRINT
+    5: OPEN_PAR
+    6: CLOSE_PAR
+    7: KWHILE
+    8: OPEN_CUR
+    9: CLOSE_CUR
+   10: KIF
+   11: KELSE
+   12: OP_MAYOR
+   13: OP_MAYOR_IGUAL
+   14: OP_MENOR
+   15: OP_MENOR_IGUAL
+   16: OP_IGUAL
+   17: OP_DISTINTO
+   18: OP_SUM
+   19: OP_RES
+   20: OP_MUL
+   21: OP_DIV
+   22: OP_MOD
+   23: NUMBER
+   24: error:
+   25: input: ID KPRINT KWHILE KIF
+   26: statement_list: ID KPRINT KWHILE KIF
+   27: statement: ID KPRINT KWHILE KIF
+   28: assign: ID
+   29: print: KPRINT
+   30: while: KWHILE
+   31: if: KIF
+   32: condicion: ID CLOSE_PAR NUMBER
+   33: opt_else: <lambda> KELSE
+   34: expr: ID CLOSE_PAR NUMBER
+   35: term: ID CLOSE_PAR NUMBER
+   36: factor: ID CLOSE_PAR NUMBER

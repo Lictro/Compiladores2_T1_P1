@@ -1,0 +1,177 @@
+%option lang = "C++"
+
+%header "build/ast.h"
+%output "build/ast.cpp"
+
+%decls %{
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <vector>
+#include <unordered_map>
+
+class ASTNode;
+
+typedef std::vector<ASTNode*> vecAST;
+typedef std::string string_t;    
+%}
+
+%{
+
+#include "ast.h"
+
+std::unordered_map<std::string, int> vars;
+%}
+
+%node ASTNode %abstract %typedef
+
+%node expression ASTNode %abstract %typedef
+
+%node Statement ASTNode %abstract %typedef
+
+%node PrintST Statement = {
+   expression * expr;
+}
+
+%node WhileST Statement = {
+    expression *condition;
+    ASTNode * block;
+}
+
+%node IfST Statement = {
+    expression * condition;
+    ASTNode * true_bl;
+    ASTNode * false_bl;
+}
+
+%node BlockST Statement = {
+    %nocreate vecAST list_st;
+}
+
+%node AssignST Statement = {
+    string_t lv;
+    expression * rv;
+}
+
+%node binary expression %abstract =
+{
+    expression *expr1;
+    expression *expr2;
+}
+
+%node Number expression = {
+    int number;
+}
+
+%node Iden expression = {
+    string_t id;
+}
+
+%node  GreaterExpr binary
+%node  LessExpr binary
+%node  GreaterEqExpr binary
+%node  LessEqExpr binary
+%node  DistExpr binary
+%node  EqualExpr binary
+%node  AddExpr binary
+%node  SubExpr binary
+%node  MulExpr binary
+%node  DivExpr binary
+%node  ModExpr binary
+
+%operation %virtual int eval(expression *this)
+
+%operation %virtual void execute(Statement *this)
+
+execute(PrintST){
+    std::cout<<expr->eval()<<std::endl;
+}
+
+execute(WhileST){
+    while(condition->eval()){
+        ((Statement*)block)->execute();
+    }
+}
+
+execute(IfST){
+    if(condition->eval()){
+        ((Statement*)true_bl)->execute();
+    }else{
+        if(false_bl!=NULL){
+            ((Statement*)false_bl)->execute();
+        }
+    }
+}
+
+execute(BlockST){
+    for(int i = 0; i < list_st.size(); i++ ){
+        ((Statement*)list_st[i])->execute();
+    }
+}
+
+execute(AssignST){
+    //std::cout<<lv<<std::endl;
+    //std::cout<<((expression*)rv)->eval()<<std::endl;
+
+    auto got = vars.find (lv);
+
+    if ( got == vars.end() ){
+        vars.insert(std::make_pair(lv,((expression*)rv)->eval()));
+    }else{
+        vars[lv] = ((expression*)rv)->eval();
+    }
+}
+
+
+eval(GreaterExpr){
+    return expr1->eval() > expr2->eval();
+}
+
+eval(GreaterEqExpr){
+    return expr1->eval() >= expr2->eval();
+}
+
+eval(LessExpr){
+    return expr1->eval() < expr2->eval();
+}
+
+eval(LessEqExpr){
+    return expr1->eval() <= expr2->eval();
+}
+
+eval(DistExpr){
+    return expr1->eval() != expr2->eval();
+}
+
+eval(EqualExpr){
+    return expr1->eval() == expr2->eval();
+}
+
+eval(AddExpr){
+    return expr1->eval() + expr2->eval();
+}
+
+eval(SubExpr){
+    return expr1->eval() - expr2->eval();
+}
+
+eval(MulExpr){
+    return expr1->eval() * expr2->eval();
+}
+
+eval(DivExpr){
+    return expr1->eval() / expr2->eval();
+}
+
+eval(ModExpr){
+    return expr1->eval() % expr2->eval();
+}
+
+eval(Number){
+    return number;
+}
+
+eval(Iden){
+    return vars.find(id)->second;
+}
