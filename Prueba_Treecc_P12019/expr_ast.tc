@@ -1,0 +1,57 @@
+%option lang = "C++"
+
+%decls %{
+#include <iostream>
+#include <string>
+
+typedef std::string string_t;
+%}
+
+%{
+#include "expr_ast.h"
+%}
+
+%node ASTNode %abstract %typedef = {}
+
+%node Expr ASTNode %abstract %typedef = {}
+
+%node Binary_Expr Expr %abstract = {
+    Expr* e1;
+    Expr* e2;
+}
+
+%node NumExpr Expr = {
+    int num;
+}
+
+%node AddExpr Binary_Expr
+%node SubExpr Binary_Expr
+%node MulExpr Binary_Expr
+%node DivExpr Binary_Expr
+%node ModExpr Binary_Expr
+
+%operation %virtual string_t toString(ASTNode *this)
+
+toString(NumExpr){
+    return std::to_string(num);
+}
+
+toString(AddExpr){
+    return "(" + e1->toString() + ")+(" + e2->toString() + ")";
+}
+
+toString(SubExpr){
+    return "(" + e1->toString() + ")-(" + e2->toString() + ")";
+}
+
+toString(MulExpr){
+    return "(" + e1->toString() + ")*(" + e2->toString() + ")";
+}
+
+toString(DivExpr){
+    return "(" + e1->toString() + ")/(" + e2->toString() + ")";
+}
+
+toString(ModExpr){
+    return "(" + e1->toString() + ")%(" + e2->toString() + ")";
+}
